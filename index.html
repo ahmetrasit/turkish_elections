@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<title>Etkileşimli Seçim Haritası - 2011 Genel Seçimleri</title>
+<style>
+	.gray {fill:snow}
+	.noColor { fill:rgb(247,251,255); }
+	.q0 { fill:rgb(222,235,247); }
+	.q1 { fill:rgb(198,219,239); }
+	.q2 { fill:rgb(158,202,225); }
+	.q3 { fill:rgb(107,174,214); }
+	.red { fill:rgb(66,146,198); }
+	text {font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue"; font-size:0.7em;}
+	div {font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue"; color:navy}
+	body {min-width:1205px;}
+	image {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		
+	}
+	.chart  {
+	  font: 10px sans-serif;
+	  background-color: steelblue;
+	  opacity:0.8;
+	  text-align: right;
+	  color: white;
+	  margin:1px;
+	}
+
+
+</style>
+
+</head>
+<body>
+<div id="content" style="min-width:1205px">
+	<div style="float:left;text-align:left;font-size:2.5em;width:550px; height:120px; padding-left:30px; padding-top:30px;">2011 Genel Seçimleri<br>Etkileşimli Korelasyon Haritası</div>
+	
+	<div style="float:left; width:50px; height:160px">
+		<div style="margin-left: auto;margin-right:auto;height:40px; width:45px;"><image src="akparti.png" width="40" height="40"></div>
+		<div style="margin-left: auto;margin-right:auto;height:40px; width:45px;"><image src="chp.png" width="40" height="40"></div>
+		<div style="margin-left: auto;margin-right:auto;height:40px; width:45px;"><image src="mhp.png" width="40" height="40"></div>
+		<div style="text-align:center;line-height:42px; width:45px;">DİĞER</div>
+	</div>
+	
+	<div style="float:left; width:500px; height:160px;">
+		<div style="clear:both">
+			<div class="chart" style="float:left;font-size:1.8em;height:38px; width:150px; text-align:left;" id="oy_bar1"></div><div style="float:left;line-height:38px;" id="oy_yuzde1"></div>
+		</div>
+		<div style="clear:both;">
+			<div class="chart" style="float:left;font-size:1.8em;height:38px; width:150px; text-align:left;" id="oy_bar2"></div><div style="float:left;line-height:38px;" id="oy_yuzde2"></div>
+		</div>
+		<div style="clear:both;">
+			<div class="chart" style="float:left;font-size:1.8em;height:38px; width:150px; text-align:left;" id="oy_bar3"></div><div style="float:left;line-height:38px;" id="oy_yuzde3"></div>
+		</div>
+		<div style="clear:both;">
+			<div class="chart" style="float:left;font-size:1.8em;height:38px; width:150px; text-align:left;" id="oy_bar4"></div><div style="float:left;line-height:38px;" id="oy_yuzde4"></div>
+		</div>
+	</div>
+
+</div>
+<div id="harita" style="clear:both;width:1200px; height:550px"></div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+	//Width and height
+			var w = 1200;
+			var h = 550;
+			var temp;
+			//Define map projection
+			var projection = d3.geo.mercator()
+								   .translate([-1550, 2850])
+								   .scale([3500]);
+			
+		   	var quantize = d3.scale.quantize()
+				.domain([0.8, 1.1])
+				.range(d3.range(5).map(function(i) { return "q" + i; }));
+			var pad = d3.format("02d");
+
+			
+			//Define path generator
+			var path = d3.geo.path()
+							 .projection(projection);
+
+			//Create SVG element
+			var svg = d3.select("div#harita")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h)
+						.attr('stroke', 'gray')
+						.style('stroke-width', '0.3');
+
+			//Load in GeoJSON data
+			r=0.9;
+			var temp_json;
+			var iller = [];
+			d3.json("tr.json", function(json) {
+				temp_json = json;
+				svg.selectAll("path")
+				   .data(json.features)
+				   .enter()
+				   .append("path")
+					   .attr("d", path)
+					   .attr('class', 'noColor')
+					   .attr('id', function(d){return "p"+d.properties.plakano;})
+					   .on('mouseover', function(d){sortAndReport(d.properties.plakano, 3)})
+					   .on('click', colorCities)
+					   .attr("transform", function(d) {
+							var centroid = path.centroid(d),
+								x = centroid[0],
+								y = centroid[1];
+							return "translate(" + x + "," + y + ")"
+								+ "scale(1)"
+								+ "translate(" + -x + "," + -y + ")";
+						  });
+					   
+				
+					   
+					   
+				   		
+				svg.selectAll("text")
+				   .data(json.features)
+				   .enter()
+				   .append("text")
+				   		.attr('id', function(d){ iller[parseInt(d.properties.plakano)] = d.properties.ad; return 't' + d.properties.plakano; })
+						.text(function(d){return d.properties.ad})
+				   		.attr('x', function(d){return path.centroid(d)[0];})
+				   		.attr('y', function(d){return path.centroid(d)[1];})
+				   		.attr("transform", function(d) {
+							return "translate( 0, 0)";
+						})
+				   		.attr("text-anchor","middle")
+    					.attr('font-size','1em')
+				   		.attr('fill', 'black')
+				   	.on('click', colorCities);
+						  
+						  
+
+			});
+			
+			corr = [];
+			d3.csv('2011sade_0.6_ready.csv', function(data){
+				corr = data;
+			});
+			
+			oylar = []
+			d3.csv('2011oylar.csv', function(data){
+				oylar = data;
+				sortAndReport(6, 3);
+			});
+			partiler = ['AK PARTİ',	'DP',	'CHP',	'EMEP',	'MP',	'LDP',	'SP',	'HEPAR',	'HP',	'MHP',	'DYP',	'TKP',	'MMP',	'BBP',	'DSP',	'BĞMSZ']
+			
+			temp = []
+			function sortAndReport(sehir, limit){
+				prepare = new Array(16);
+				curr = oylar[sehir-1];
+				//console.log(curr)
+				parties = Object.keys(curr);
+				//oyToplam = 0;
+				for (var key in parties){
+					//parti = parties[key];
+					oy = parseFloat(curr[parties[key]]);
+					//console.log(key);
+					//console.log(oy);
+					//oyToplam += oy;
+				}
+				//sorted = prepare.sort(cmp);
+				//selected = sorted.slice(0, limit);
+					output = [];
+				//for (var key in selected){
+				//	curr = selected[key];
+				//	output[key] = [partiler[curr[0]], curr[1]];
+				//	console.log(output[key][0,0]);
+				//}
+				//temp = output;
+				diger =  curr.p1*10 + curr.p3*10 + curr.p10*10;
+				diger = (1000-diger)/10;
+				console.log(diger);
+				d3.select('div#oy_bar1').style('width', parseInt(curr.p1*5) + 'px');
+				d3.select('div#oy_bar2').style('width', parseInt(curr.p3*5) + 'px');
+				d3.select('div#oy_bar3').style('width', parseInt(curr.p10*5) + 'px');
+				d3.select('div#oy_bar4').style('width', parseInt(diger*5) + 'px');
+				d3.select('div#oy_yuzde1').text("%" +curr.p1);
+				d3.select('div#oy_yuzde2').text("%" +curr.p3);
+				d3.select('div#oy_yuzde3').text("%" +curr.p10);
+				d3.select('div#oy_yuzde4').text("%" +diger);
+				//d3.select('div#parti1').text(output[0] )
+				//d3.select('div#parti2').text(output[1] )
+				//d3.select('div#parti3').text(output[2] )
+				//d3.select('div#oy4').text(output[3][0,0] + " %" +output[3][0,1]).style('width', parseInt(output[3][0,1]*10) + 'px');
+				
+				return output;
+			}
+			
+			
+			function cmp(b, a) {
+				return a[1] - b[1];
+			}
+			
+			function colorCities(d){
+				console.log('deneme');
+				sehir = d.properties.plakano;
+				console.log(sehir);
+				temp = corr[sehir-1];
+				for(var i=1; i<82; i++){
+					if(temp[i]<0.9){
+						d3.select("#p"+pad(i)).attr("class", "noColor");
+						d3.select("#t"+pad(i)).text(iller[i]);
+						d3.select("#t"+pad(i)).style('font-size', '0.7em');
+					}else{
+						d3.select("#p"+pad(i)).attr("class", quantize(temp[i]));
+						d3.select("#t"+pad(i)).text(iller[i] + " %" + Math.round(temp[i]*1000)/10);
+						d3.select("#t"+pad(i)).style('font-size', '0.9em');
+					}
+				}
+				d3.select("#p"+sehir).attr("class", "red");
+				d3.select("#t"+sehir).text(iller[parseInt(sehir)]);
+				d3.select("#t"+sehir).style('font-size', '0.9em');				
+			}
+			
+			function temizle(){
+				for(var i=1; i<82; i++){
+					d3.select("#p"+pad(i)).attr("class", "noColor");
+					d3.select("#t"+pad(i)).text(iller[i]);
+					d3.select("#t"+pad(i)).style('font-size', '0.7em');		
+				}
+				sortAndReport(6, 3);
+			}
+			    
+</script>
+
+<center style='width:1200px' onclick='temizle()'><input type='button' value='Temizle'/><br/><br></center>
+<div style="text-align:center;font-size:1em;width:1200px; font-size:1.5em">Bir ile tıklayın/dokunun, benzer şekilde oy veren diğer illeri keşfedin.<br><br></div>
+<div style="text-align:center;font-size:1em;width:1200px; opacity:0.6">Ahmet Raşit Öztürk - 2014<p>ahmetrasit@gmail.com<p><br></div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45026694-1', 'ahmetrasit.com');
+  ga('send', 'pageview');
+
+</script>

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<title>Etkileşimli Seçim Haritası - 2011 Genel Seçimleri</title>
+<style>
+	.gray {fill:snow}
+	.noColor { fill:rgb(247,251,255); }
+	.q0 { fill:rgb(222,235,247); }
+	.q1 { fill:rgb(198,219,239); }
+	.q2 { fill:rgb(158,202,225); }
+	.q3 { fill:rgb(107,174,214); }
+	.red { fill:rgb(66,146,198); }
+	text {font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue"; font-size:0.7em;}
+	div {font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue"; color:navy}
+	body {min-width:1205px;}
+	
+	.chart  {
+	  font: 10px sans-serif;
+	  background-color: steelblue;
+	  opacity:0.8;
+	  text-align: right;
+	  color: white;
+	  margin:1px;
+	}
+	
+	.sandik  {
+	  background-color: skyblue;
+	  opacity:1;
+	  color: black;
+	  margin:1px;
+	}
+	
+	.katilim  {
+	  background-color: gold;
+	  opacity:1;
+	  color: black;
+	  margin:1px;
+	}
+
+
+</style>
+
+</head>
+<body onload="start()">
+<div style="text-align:center;font-size:1em;width:1250px;padding-top:10px;"></div>
+
+
+<div id="content" style="min-width:120px;clear:both">
+
+<div style="float:left;text-align:left;font-size:1em;width:150px;padding:5px;padding-left:40px;font-size:2em;">
+	2011 Genel Seçimleri
+</div>
+<div style="float:left">
+	<div style="text-align:left;font-size:1em;width:150px;padding:5px;padding-left:40px;font-size:2em;" id="il_baslik">Ankara</div>
+	<div style="float:left; width:40px; height:120px">
+		<div style="margin-left: auto;margin-right:auto;height:30px; width:45px;"><image src="akparti.png" width="30" height="30"></div>
+		<div style="margin-left: auto;margin-right:auto;height:30px; width:45px;"><image src="chp.png" width="30" height="30"></div>
+		<div style="margin-left: auto;margin-right:auto;height:30px; width:45px;"><image src="mhp.png" width="30" height="30"></div>
+		<div style="text-align:left;font-size:0.8em;line-height:30px; width:45px;">DİĞER</div>
+	</div>
+	
+	
+	<div style="float:left; width:380px; height:120px;">
+		<div style="clear:both">
+			<div class="chart" style="float:left;font-size:1.8em;height:28px; width:150px; text-align:left;" id="oy_bar1"></div><div style="float:left;line-height:28px;" id="oy_yuzde1"></div>
+		</div>
+		<div style="clear:both;">
+			<div class="chart" style="float:left;font-size:1.8em;height:28px; width:150px; text-align:left;" id="oy_bar2"></div><div style="float:left;line-height:28px;" id="oy_yuzde2"></div>
+		</div>
+		<div style="clear:both;">
+			<div class="chart" style="float:left;font-size:1.8em;height:28px; width:150px; text-align:left;" id="oy_bar3"></div><div style="float:left;line-height:28px;" id="oy_yuzde3"></div>
+		</div>
+		<div style="clear:both;">
+			<div class="chart" style="float:left;font-size:1.8em;height:28px; width:150px; text-align:left;" id="oy_bar4"></div><div style="float:left;line-height:28px;" id="oy_yuzde4"></div>
+		</div>
+	</div>
+	
+</div>
+
+
+<div style="float:left; padding-top:26px;padding-right:10px;">
+	<div style="width:50px; height:20px; fill:powderblue; text-align:center;font-size:0.8em">SANDIK</div>
+	<div class="sandik" style="width:50px; height:20px; fill:powderblue;" id="kalanSandikYuzde"></div>
+	<div class="sandik" style="width:50px; height:20px; fill:powderblue; text-align:center;opacity:1;margin-bottom:0px; font-size:1em;" id="sandik"></div>
+	<div class="sandik" style="width:50px; height:80px; fill:royalblue; font-size:1em; text-align:center;margin-top:0px" id="sandikYuzde"></div>
+</div>
+
+
+<div style="float:left; padding-top:26px;padding-right:10px;">
+	<div style="width:50px; height:20px; fill:powderblue; text-align:center;font-size:0.8em;" id="katilimBaslik">KATILIM</div>
+	<div class="katilim" style="width:50px; height:20px; fill:powderblue" id="kalanYuzde"></div>
+	<div class="katilim" style="width:50px; height:100px; fill:royalblue; font-size:1em; text-align:center" id="katilimYuzde"></div>
+</div>
+
+
+<div style="float:left">	
+	<div style="text-align:left;font-size:1em;width:150px;padding:5px;padding-left:40px;font-size:2em;" id="ilce_baslik">Çankaya</div>
+	<div style="float:left; width:40px; height:120px">
+		<div style="margin-left: auto;margin-right:auto;height:15px; width:45px;"><image src="akparti.png" width="15" height="15"></div>
+		<div style="margin-left: auto;margin-right:auto;height:15px; width:45px;"><image src="chp.png" width="15" height="15"></div>
+		<div style="margin-left: auto;margin-right:auto;height:15px; width:45px;"><image src="mhp.png" width="15" height="15"></div>
+		<div style="text-align:left;font-size:0.8em;line-height:15px; width:45px;">BGMS</div>
+		<div style="text-align:left;font-size:0.8em;line-height:15px; width:45px;">DP</div>
+		<div style="text-align:left;font-size:0.8em;line-height:15px; width:45px;">SP</div>
+		<div style="text-align:left;font-size:0.8em;line-height:15px; width:45px;">HP</div>
+		<div style="text-align:left;font-size:0.8em;line-height:15px; width:45px;">BBP</div>
+	</div>
+	
+	
+	<div style="float:left; width:430px; height:120px;">
+		<div style="clear:both">
+			<div class="chart" style="float:left;font-size:1.8em;height:13px; width:150px; text-align:left;" id="ilce_oy_bar1"></div><div style="float:left;line-height:13px;font-size:0.9em" id="ilce_oy_yuzde1"></div>
+		</div>
+		<div style="clear:both;">
+			<div class="chart" style="float:left;font-size:1.8em;height:13px; width:150px; text-align:left;" id="ilce_oy_bar2"></div><div style="float:left;line-height:13px;font-size:0.9em" id="ilce_oy_yuzde2"></div>
+		</div>
+		<div style="clear:both;">
+			<div class="chart" style="float:left;font-size:1.8em;height:13px; width:150px; text-align:left;" id="ilce_oy_bar3"></div><div style="float:left;line-height:13px;font-size:0.9em" id="ilce_oy_yuzde3"></div>
+		</div>
+		<div style="clear:both;">
+			<div class="chart" style="float:left;font-size:1.8em;height:13px; width:150px; text-align:left;" id="ilce_oy_bar4"></div><div style="float:left;line-height:13px;font-size:0.9em" id="ilce_oy_yuzde4"></div>
+		</div>
+		<div style="clear:both;">
+			<div class="chart" style="float:left;font-size:1.8em;height:13px; width:150px; text-align:left;" id="ilce_oy_bar5"></div><div style="float:left;line-height:13px;font-size:0.9em" id="ilce_oy_yuzde5"></div>
+		</div>
+		<div style="clear:both;">
+			<div class="chart" style="float:left;font-size:1.8em;height:13px; width:150px; text-align:left;" id="ilce_oy_bar6"></div><div style="float:left;line-height:13px;font-size:0.9em" id="ilce_oy_yuzde6"></div>
+		</div>
+		<div style="clear:both;">
+			<div class="chart" style="float:left;font-size:1.8em;height:13px; width:150px; text-align:left;" id="ilce_oy_bar7"></div><div style="float:left;line-height:13px;font-size:0.9em" id="ilce_oy_yuzde7"></div>
+		</div>
+		<div style="clear:both;">
+			<div class="chart" style="float:left;font-size:1.8em;height:13px; width:150px; text-align:left;" id="ilce_oy_bar8"></div><div style="float:left;line-height:13px;font-size:0.9em" id="ilce_oy_yuzde8"></div>
+		</div>
+	</div>
+</div>
+
+</div>
+<div id="haritalar" style="clear:both">
+	<div id="harita" style="float:left;width:900px; height:390px"></div>
+	<div id="sehir" style="border:1px solid lightgray;float:left;width:300;height:390;"></div>
+</div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+	function start(){
+	
+	var root;
+	var w = 900;
+	var h = 390;
+	var temp;
+	//Define map projection
+	var projection = d3.geo.mercator()
+						   .translate([-1210, 2200])
+						   .scale([2700]);
+	
+  
+	
+	//Define path generator
+	var path = d3.geo.path()
+					 .projection(projection);
+
+	//Create SVG element
+	var svg = d3.select("div#harita")
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h)
+				.attr('stroke', 'black')
+				.style('stroke-width', '0.3');
+	
+	il = [];
+	ilce = [];
+	birlesik = []
+	
+	d3.json('il.json', function(json){
+		il = json;
+		ileEsitle(il);
+		
+
+	});
+	//console.log(il);
+	
+	d3.json('ilce.json', function(json){
+		ilce = json;
+		ilceyeEsitle(ilce);	
+	});	
+
+	json2corr = [];
+	d3.csv('json2corr.csv', function(data){
+		json2corr = data;
+	});
+	
+	corr = [];
+	d3.csv('2011genel_ilceler_0.9_min.csv', function(data){
+		corr = data;
+	});
+	
+	oylarIlce = [];
+	d3.csv('2011genel_oylarVeKatilim_ilceler.csv', function(data){
+		oylarIlce = data;
+		drawBarIlce('ilce_73', 'Çankaya');
+		
+	});
+	
+	oylar = []
+	d3.csv('2011oylar.csv', function(data){
+		oylar = data;
+		drawBarSehir(6);
+	});
+	
+	var quantize = d3.scale.quantize()
+		.domain([0.9, 1.07])
+		.range(d3.range(5).map(function(i) { return "q" + i; }));
+	
+	function harita(){
+		svg.selectAll("path")
+			   .data(birlesik)
+			   .enter()
+			   .append("path")
+				   .attr("d", path)
+				   .on('click', function(d){
+				   		drawCity(d.parent[0])
+				   	})
+				   .on('mouseover', function(d){
+				   		drawBarSehir(d.parent[0]);
+				   		drawBarIlce('ilce_' + d.id, d.name);
+				   		})
+				   .style('opacity', function(d){
+						if(d.parent){
+							return '0.8';
+						}else{
+							return '1';
+						}
+				   })
+				   .style('stroke', function(d){
+						if(d.parent){
+							return "deepskyblue";
+						}else{
+							return 'navy';
+						}
+				   })
+				   .style('stroke-width', function(d){
+						if(d.parent){
+							return 0.5;
+						}else{
+							return 2;
+						}
+				   })
+				   .style('fill', 'rgb(247,251,255)')
+				   .attr('id', function(d){
+				   		if(d.parent){
+				   			return 'ilce_' + d.id;
+				   		}else{
+				   			return 'il' + d.id;
+				   		}
+				   	})
+				   .attr("transform", function(d) {	
+						var centroid = path.centroid(d),
+							x = centroid[0],
+							y = centroid[1];
+						return "translate(" + x + "," + y + ")"
+							+ "scale(1)"
+							+ "translate(" + -x + "," + -y + ")";
+					
+					  });
+					  
+		svg.selectAll("text")
+				   .data(il.features)
+				   .enter()
+				   .append("text")
+				   .on('click', function(d){drawCity(d.id)})
+				   .on('mouseover', function(d){
+				   		drawBarSehir(d.id);
+			   		})
+						.text(function(d){return d.name})
+				   		.attr('x', function(d){return path.centroid(d)[0];})
+				   		.attr('y', function(d){return path.centroid(d)[1];})
+				   		.attr("transform", function(d) {
+							return "translate( 0, 0)";
+						})
+				   		.attr("text-anchor","middle")
+    					.attr('font-size','1em')
+				   		.attr('fill', 'black')
+				   		
+		drawCity(6);
+		drawBarIlce('ilce_73', 'Çankaya');
+		drawBarSehir(6);
+				   
+	}	
+	
+
+	
+							
+	function drawCity(sehir){
+		console.log(sehir[0]);
+		var w = 300;
+		var h = 390;
+		var temp;
+		
+		d3.select("div#sehir").selectAll('*').remove();
+		
+		var svgSehir = d3.select("div#sehir")
+				.append("svg")
+				.attr('id', 'sehir')
+				.attr("width", 300)
+				.attr("height", 390)
+				.attr('stroke', 'gray')
+				.style('stroke-width', '0.3');
+		
+		//Define map projection
+		var centroidX=0, centroidY=0;
+		currData = il.features.filter(function(d){return d.id==sehir});
+		//console.log(currData[0].centroid);
+		boundsX = [];
+		boundsY = [];
+		for (var temp in currData){
+			boundsX.push(currData[temp].bbox[0]);
+			boundsX.push(currData[temp].bbox[2]);
+			boundsY.push(currData[temp].bbox[1]);
+			boundsY.push(currData[temp].bbox[3]);
+			centroidX = (centroidX * temp + currData[temp].centroid[0]) / (parseInt(temp)+1);
+			centroidY = (centroidY * temp + currData[temp].centroid[1]) / (parseInt(temp)+1);
+		}
+		upperBoundX = Math.max.apply(Math,boundsX);
+		lowerBoundX = Math.min.apply(Math,boundsX);
+		upperBoundY = Math.max.apply(Math,boundsY);
+		lowerBoundY = Math.min.apply(Math,boundsY);
+		diffX = upperBoundX - lowerBoundX;
+		diffY = upperBoundY - lowerBoundY;
+		maxDiff = Math.max.apply(Math,[diffX, diffY]);
+		//console.log(maxDiff);
+		calcScale = 16000 / maxDiff ;
+		//console.log(calcScale);
+		
+		cX = upperBoundX + lowerBoundX;
+		cY = upperBoundY + lowerBoundY;
+		
+		var projection = d3.geo.mercator()
+							   .translate([150,195])
+							   //.center([centroidX,centroidY])
+							   .center([cX/2, cY/2])
+							   .scale([calcScale]);
+		//console.log(projection.center());
+	
+		//Define path generator
+		var path = d3.geo.path()
+						 .projection(projection);
+	
+		
+		
+		
+		//var curr = il.features.filter(function(d){return d.id == sehir});
+		var iller = [];
+		var selection = [];
+		iller.length = 0;
+		selection.length = 0;
+		iller.push.apply(iller, il.features);
+		selection = ilce.features.filter(function(d){return d.parent==sehir});
+		iller.push.apply(iller, selection);
+		//console.log(iller.length);
+		svgSehir.selectAll("path")
+			.data(iller)
+			.enter()
+			.append("path")
+			.on('mouseover', function(d){
+				drawBarSehir(d.parent[0]);
+				drawBarIlce('ilce_' + d.id, d.name);
+			})
+			.on('click', function(d){
+				if(d.parent){
+				 	colorIlce(d.id);
+				 	colorBuyuk(d.id, d.parent[0]);
+				}
+			})
+			.attr("d", path)
+			.style('opacity', function(d){
+				if(d.parent == sehir){
+					return 1;
+				}else{
+					return 0.2;
+				}
+			})
+			.style('stroke', 'royalblue')
+			.style('stroke-width', 0.5)
+			.style('fill', function(d){
+				if(d.parent == sehir){
+					return 'aliceblue';
+				}else{
+					return 'snow';
+				}
+			})
+			.attr('id', function(d){
+				if(d.parent){
+					return 'ilce_' + d.id;
+				}
+			})
+			.attr('id', function(d){
+				if(d.parent){
+					return 'buyuk_' + d.id;
+				}
+			})
+			.attr("transform", function(d) {	
+				var centroid = path.centroid(d),
+					x = centroid[0],
+					y = centroid[1];
+					//console.log(centroid);
+				return "translate(" + x + "," + y + ")"
+					+ "scale(1)"
+					+ "translate(" + -x + "," + -y + ")";					
+			});	
+			
+			
+		
+	}	
+	
+	
+	function colorBuyuk(id, sehir){
+		//console.log(sehir);
+		ilceler = ilce.features.filter(function(d){return d.parent[0] == sehir});
+		//console.log(ilceler);
+		for(var i in ilceler){
+			//console.log(i);
+			if(id == ilceler[i].id){
+				d3.select('#buyuk_'+ ilceler[i].id).style('fill', 'steelblue');
+				d3.select('#ilce_'+ ilceler[i].id).style('fill', 'steelblue');
+				d3.select('#ilce_'+ ilceler[i].id).style('opacity', 1);
+			}else{
+				d3.select('#buyuk_'+ ilceler[i].id).style('fill', 'aliceblue');
+				d3.select('#ilce_'+ ilceler[i].id).style('opacity', 0.8);
+
+			}
+		}
+	}
+	
+	function drawBarSehir(sehir){
+		curr = oylar[sehir-1];
+		
+		
+		diger =  curr.p1*10 + curr.p3*10 + curr.p10*10;
+		diger = (1000-diger)/10;
+		//console.log(diger);
+		d3.select('div#oy_bar1').style('width', parseInt(curr.p1*4) + 'px');
+		d3.select('div#oy_bar2').style('width', parseInt(curr.p3*4) + 'px');
+		d3.select('div#oy_bar3').style('width', parseInt(curr.p10*4) + 'px');
+		d3.select('div#oy_bar4').style('width', parseInt(diger*4) + 'px');
+		d3.select('div#oy_yuzde1').text("%" +curr.p1);
+		d3.select('div#oy_yuzde2').text("%" +curr.p3);
+		d3.select('div#oy_yuzde3').text("%" +curr.p10);
+		d3.select('div#oy_yuzde4').text("%" +diger);
+		d3.select('div#il_baslik').text(il.features.filter(function(d){return d.id==sehir})[0].name);
+	}
+	
+	
+	function drawBarIlce(ilce_id, baslik){
+		//console.log(ilce_id);
+		corr_index = json2corr.filter(function(d){return d.json_id == ilce_id})[0].corr_index
+		curr = oylarIlce[corr_index];
+		//console.log(curr);
+		diger =  curr.p1*10 + curr.p3*10 + curr.p10*10;
+		diger = (1000-diger)/10;
+		//console.log(diger);
+		d3.select('div#ilce_oy_bar1').style('width', parseInt(curr.p1*4) + 'px');
+		d3.select('div#ilce_oy_bar2').style('width', parseInt(curr.p3*4) + 'px');
+		d3.select('div#ilce_oy_bar3').style('width', parseInt(curr.p10*4) + 'px');
+		d3.select('div#ilce_oy_bar4').style('width', parseInt(curr.p16*4) + 'px');
+		d3.select('div#ilce_oy_bar5').style('width', parseInt(curr.p2*4) + 'px');
+		d3.select('div#ilce_oy_bar6').style('width', parseInt(curr.p7*4) + 'px');
+		d3.select('div#ilce_oy_bar7').style('width', parseInt(curr.p9*4) + 'px');
+		d3.select('div#ilce_oy_bar8').style('width', parseInt(curr.p14*4) + 'px');
+		d3.select('div#katilimYuzde')
+			.style('height', function(){
+				if (curr.katilim > 100){
+					return '120px';
+				}else{
+					return parseInt(curr.katilim)*1.2 + 'px';
+				}
+			})
+			.style('opacity', 1);
+		d3.select('div#kalanYuzde')
+			.style('height', function(){
+				if (curr.katilim > 100){
+					return '0px';
+				}else{
+					return (100-parseInt(curr.katilim))*1.2 + 'px';
+				}
+			})
+			.style('opacity', 0.3);
+		d3.select('div#sandikYuzde')
+			.style('height', parseInt(curr.sandik/2118*100) + 'px')
+			.style('opacity', 1)
+		d3.select('div#kalanSandikYuzde')
+			.style('height', (100-parseInt(curr.sandik/2118*100)) + 'px')
+			.style('opacity', 0.3)
+		d3.select('div#ilce_oy_yuzde1').text("%" +curr.p1);
+		d3.select('div#ilce_oy_yuzde2').text("%" +curr.p3);
+		d3.select('div#ilce_oy_yuzde3').text("%" +curr.p10);
+		d3.select('div#ilce_oy_yuzde4').text("%" +curr.p16);
+		d3.select('div#ilce_oy_yuzde5').text("%" +curr.p2);
+		d3.select('div#ilce_oy_yuzde6').text("%" +curr.p7);
+		d3.select('div#ilce_oy_yuzde7').text("%" +curr.p9);
+		d3.select('div#ilce_oy_yuzde8').text("%" +curr.p14);
+		d3.select('div#katilimYuzde').text("%" +curr.katilim).style('fill', 'black');
+		d3.select('div#sandik').text(curr.sandik).style('fill', 'black');
+		d3.select('div#ilce_baslik').text(baslik);
+	}
+	
+	
+	function cmp(b, a) {
+		return a[1] - b[1];
+	}
+	
+	current = [];
+	function colorIlce(ilce){
+		ilce_id = 'ilce_'+ ilce;
+		//console.log(ilce_id);
+		corr_index = json2corr.filter(function(d){return d.json_id == ilce_id})[0].corr_index;		
+		//console.log('corr_index' + corr_index);
+		current = corr[parseInt(corr_index)];
+		//console.log(temp);
+		var found = [];
+		for (f in current) {
+   			found.push(current[f]);
+		}
+		for(var i=0; i<found.length; i++){
+			//console.log(i);
+			if(found[i]<0.9){
+				d3.select("#" + json2corr.filter(function(d){return d.corr_index == i})[0].json_id).style("fill", "rgb(247,251,255)");
+			}else{
+				d3.select("#" + json2corr.filter(function(d){return d.corr_index == i})[0].json_id).style('fill', 'skyblue');
+			}
+		}
+		
+		//d3.select("#ilce"+i).attr("class", "red");
+		//d3.select("#t"+sehir).text(iller[parseInt(sehir)]);
+		//d3.select("#t"+sehir).style('font-size', '0.9em');				
+	}
+	
+	function temizle(){
+		for(var i=1; i<82; i++){
+			d3.select("#p"+pad(i)).attr("class", "noColor");
+			d3.select("#t"+pad(i)).text(iller[i]);
+			d3.select("#t"+pad(i)).style('font-size', '0.7em');		
+		}
+		sortAndReport(6, 3);
+	}
+	
+
+	function ileEsitle(input){
+		il = input;
+		birlesik.push.apply(birlesik, il.features);
+	
+	}
+
+	function ilceyeEsitle(input){
+		ilce = input;
+		birlesik.push.apply(birlesik, ilce.features);
+		harita();
+		
+	}
+
+	
+			
+}		
+			    
+</script>
+
+<center style='width:1200p; clear:both' onclick='temizle()'><input type='button' value='Temizle'/><br/><br></center>
+<div style="text-align:center;font-size:1em;width:1200px; font-size:1.5em">Bir ile tıklayın/dokunun, benzer şekilde oy veren diğer illeri keşfedin.<br><br></div>
+<div style="text-align:center;font-size:1em;width:1200px; opacity:0.6">Ahmet Raşit Öztürk - 2014<p>ahmetrasit@gmail.com<p><br></div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45026694-1', 'ahmetrasit.com');
+  ga('send', 'pageview');
+
+</script>
